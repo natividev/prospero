@@ -6,7 +6,7 @@ on:
       - develop
 
 env:
-  TARGET_URL: ${{ github.ref == 'refs/heads/main' }} && 'https://captain.something.natividaddev.software'
+  TARGET_URL: ${{ github.ref == 'refs/heads/main' }} && 'https://captain.something.natividaddev.software' }}
   TARGET_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
 
 jobs:
