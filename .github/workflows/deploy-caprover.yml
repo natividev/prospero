@@ -21,7 +21,7 @@ jobs:
         name: Create GitHub deployment
         id: deploymentprospero
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.GIT_TOKEN }}
           environment-url: ${{ env.TARGET_URL }}
           environment: ${{ env.TARGET_ENV }}
 
@@ -35,7 +35,7 @@ jobs:
         if: success()
         uses: chrnorm/deployment-action@v2
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.GIT_TOKEN }}
           environment-url: ${{ env.TARGET_URL }}
           state: "success"
           deployment_id: ${{ steps.deploymentprospero.outputs.deployment_id }}
@@ -44,7 +44,7 @@ jobs:
         if: failure()
         uses: chrnorm/deployment-action@v2
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.GIT_TOKEN }}
           environment-url: ${{ env.TARGET_URL }}
           state: "failure"
           deployment_id: ${{ steps.deploymentprospero.outputs.deployment_id }}
