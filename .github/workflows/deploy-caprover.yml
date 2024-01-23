@@ -6,7 +6,7 @@ on:
       - develop
 
 env:
-  TARGET_URL: ${{ github.ref == 'refs/heads/main'}} && 'https://captain.something.natividaddev.software' }}
+  TARGET_URL: ${{ github.ref == 'refs/heads/main' }} && 'https://captain.something.natividaddev.software'
   TARGET_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
 
 jobs:
@@ -15,36 +15,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - uses: chrnorm/deployment-action@v2
-      name: Create GitHub deployment
-      id: deploymentprospero
-      with:
-        token: ${{ github.token }}
-        environment-url: ${{ env.TARGET_URL }}
-        environment: ${{ env.TARGET_ENV }}
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deploymentprospero
+        with:
+          token: ${{ github.token }}
+          environment-url: ${{ env.TARGET_URL }}
+          environment: ${{ env.TARGET_ENV }}
 
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-        cache: 'npm'
-    - run: npx caprover deploy -h ${{ secrets.CAPROVER_HOST }} -p ${{ secrets.CAPROVER_PASSWORD }} -a ${{ secrets.CAPROVER_APP }} -b ${{github.ref_name}}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npx caprover deploy -h ${{ secrets.CAPROVER_HOST }} -p ${{ secrets.CAPROVER_PASSWORD }} -a ${{ secrets.CAPROVER_APP }} -b ${{github.ref_name}}
 
-    - name: Update deployment status (success)
-    if: success()
-      uses: chrnorm/deployment-action@v2
-      with:
-        token: ${{ github.token }}
-        environment-url: ${{ env.TARGET_URL }}
-        state: "success"
-        deployment_id: ${{ steps.deploymentprospero.outputs.deployment_id }}
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-action@v2
+        with:
+          token: ${{ github.token }}
+          environment-url: ${{ env.TARGET_URL }}
+          state: "success"
+          deployment_id: ${{ steps.deploymentprospero.outputs.deployment_id }}
 
- -   name: Update deployment status (failure)
-     if: failure()
-      uses: chrnorm/deployment-action@v2
-      with:
-        token: ${{ github.token }}
-        environment-url: ${{ env.TARGET_URL }}
-        state: "failure"
-        deployment_id: ${{ steps.deploymentprospero.outputs.deployment_id }}
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-action@v2
+        with:
+          token: ${{ github.token }}
+          environment-url: ${{ env.TARGET_URL }}
+          state: "failure"
+          deployment_id: ${{ steps.deploymentprospero.outputs.deployment_id }}
