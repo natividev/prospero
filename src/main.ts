@@ -13,6 +13,7 @@ async function bootstrap() {
     })
     .setGlobalPrefix(APP_ROUTE_PREFIX);
 
-  await app.listen(3000);
+  await app.listen(8000);
+  console.log({ app });
 }
 bootstrap();
